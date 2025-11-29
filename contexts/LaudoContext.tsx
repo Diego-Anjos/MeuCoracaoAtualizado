@@ -77,10 +77,12 @@ export function LaudoProvider({ children }: { children: React.ReactNode }) {
   const deleteLaudo = async (id: string) => {
     try {
       setError(null);
+      console.log('🗑️ LaudoContext - Deletando laudo:', id);
       await laudoAPI.delete(id);
       setLaudos(laudos.filter((l) => l.id !== id));
+      console.log('✅ LaudoContext - Laudo deletado com sucesso');
     } catch (err: any) {
-      console.error('Erro ao deletar laudo:', err);
+      console.error('❌ LaudoContext - Erro ao deletar laudo:', err);
       setError(err.message || 'Erro ao deletar laudo');
       throw err;
     }

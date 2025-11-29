@@ -80,10 +80,12 @@ export function RemedioProvider({ children }: { children: ReactNode }) {
   const excluirRemedio = async (id: string) => {
     try {
       setError(null);
+      console.log('🗑️ RemedioContext - Excluindo remédio:', id);
       await remedioAPI.delete(id);
       setRemedios(remedios.filter((remedio) => remedio.id !== id));
+      console.log('✅ RemedioContext - Remédio excluído com sucesso');
     } catch (err: any) {
-      console.error('Erro ao excluir remédio:', err);
+      console.error('❌ RemedioContext - Erro ao excluir remédio:', err);
       setError(err.message || 'Erro ao excluir remédio');
       throw err;
     }

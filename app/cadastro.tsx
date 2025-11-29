@@ -1,7 +1,7 @@
 // app/cadastro.tsx
 import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import { Redirect } from "expo-router";
+import { Redirect, router } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -14,6 +14,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View
 } from "react-native";
 import { useAuth } from "../contexts/AuthContext";
@@ -26,12 +27,12 @@ export default function CadastroScreen() {
   const [doenca, setDoenca] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
-  const { register, token } = useAuth();
+  const { register, token, user } = useAuth();
 
-  // Redirecionar para home se já estiver autenticado
-  if (token) {
-    console.log('✅ Usuário autenticado, redirecionando para /(tabs)...');
-    return <Redirect href="/(tabs)" />;
+  // Redirecionar para explorar se já estiver autenticado
+  if (token && user) {
+    console.log('✅ Usuário autenticado, redirecionando para explore...');
+    return <Redirect href="/(tabs)/explore" />;
   }
 
   async function onContinuar() {
@@ -72,14 +73,15 @@ export default function CadastroScreen() {
       await register({ name: nome, email, password: senha });
       
       console.log('✅ Cadastro realizado com sucesso!');
-      console.log('🎯 Aguardando navegação automática...');
-      // Sucesso - o AuthContext já atualizou o token e user
-      // O RootLayoutNav irá automaticamente mostrar as tabs
-      // Não precisa de Alert ou navegação manual
+      console.log('🎯 Aguardando atualização do contexto...');
       
-      // Pequeno delay adicional para garantir re-render
-      await new Promise(resolve => setTimeout(resolve, 200));
-      console.log('🔄 Re-render deveria ter acontecido');
+      // Aguardar um pouco para garantir que o contexto seja atualizado
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      console.log('🎯 Navegando para explore...');
+      
+      // Navegar para a tela de menus com replace para não poder voltar
+      router.replace('/(tabs)/explore');
     } catch (error: any) {
       console.error('❌ Erro completo capturado:', error);
       
@@ -121,6 +123,10 @@ export default function CadastroScreen() {
 
   function onGoogle() {
     alert("Login com Google (será implementado em breve)");
+  }
+
+  function goToLogin() {
+    router.push('/login');
   }
 
   return (
@@ -223,6 +229,13 @@ export default function CadastroScreen() {
           <Text style={styles.disclaimer}>
             Seus dados são protegidos e usados{"\n"}apenas para cuidar da sua saúde.
           </Text>
+
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>Já tem uma conta? </Text>
+            <TouchableOpacity onPress={goToLogin}>
+              <Text style={styles.loginLink}>Faça login</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -288,4 +301,19 @@ const styles = StyleSheet.create({
   },
   googleText: { color: "#fff", fontSize: 15, fontWeight: "600" },
   disclaimer: { color: "#9CA3AF", textAlign: "center", marginTop: 18, lineHeight: 20 },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 16,
+  },
+  footerText: {
+    color: "#9CA3AF",
+    fontSize: 14,
+  },
+  loginLink: {
+    color: "#FF4D5A",
+    fontSize: 14,
+    fontWeight: "600",
+  },
 });

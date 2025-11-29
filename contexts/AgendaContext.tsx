@@ -82,10 +82,12 @@ export function AgendaProvider({ children }: { children: React.ReactNode }) {
   const deleteEvento = async (id: string) => {
     try {
       setError(null);
+      console.log('🗑️ AgendaContext - Deletando evento:', id);
       await agendaAPI.delete(id);
       setEventos(eventos.filter((e) => e.id !== id));
+      console.log('✅ AgendaContext - Evento deletado com sucesso');
     } catch (err: any) {
-      console.error('Erro ao deletar evento:', err);
+      console.error('❌ AgendaContext - Erro ao deletar evento:', err);
       setError(err.message || 'Erro ao deletar evento');
       throw err;
     }

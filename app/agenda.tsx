@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
 import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 import { useAgenda } from '@/contexts/AgendaContext';
@@ -26,8 +26,13 @@ export default function AgendaScreen() {
         {
           text: 'Excluir',
           style: 'destructive',
-          onPress: () => {
-            deleteEvento(id);
+          onPress: async () => {
+            try {
+              await deleteEvento(id);
+              Alert.alert('Sucesso', 'Evento excluído com sucesso!');
+            } catch (error) {
+              Alert.alert('Erro', 'Não foi possível excluir o evento.');
+            }
           },
         },
       ],

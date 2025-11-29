@@ -3,7 +3,7 @@ import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "rea
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function HomeScreen() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   
   const cards = [
     { id: 1, title: "Agenda", icon: "📅", route: "/agenda" },
@@ -22,13 +22,26 @@ export default function HomeScreen() {
     }
   };
 
+  const handleLogout = async () => {
+    await logout();
+    router.replace('/cadastro');
+  };
+
   // Pega o primeiro nome do usuário
   const primeiroNome = user?.name?.split(' ')[0] || "Usuário";
 
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.greeting}>Olá, {primeiroNome}</Text>
+        <View style={styles.header}>
+          <Text style={styles.greeting}>Olá, {primeiroNome}</Text>
+          <Pressable 
+            onPress={handleLogout}
+            style={({ pressed }) => [styles.logoutBtn, pressed && { opacity: 0.7 }]}
+          >
+            <Text style={styles.logoutText}>Sair</Text>
+          </Pressable>
+        </View>
 
         <View style={styles.grid}>
           {cards.map((card) => (
@@ -56,12 +69,28 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
+    marginTop: 8,
+  },
   greeting: {
     color: "#FFFFFF",
     fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 24,
-    marginTop: 8,
+  },
+  logoutBtn: {
+    backgroundColor: "#DC2626",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  logoutText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "600",
   },
   grid: {
     flexDirection: "row",

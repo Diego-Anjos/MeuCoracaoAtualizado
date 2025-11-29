@@ -25,7 +25,14 @@ export default function RemediosScreen() {
         {
           text: 'Excluir',
           style: 'destructive',
-          onPress: () => excluirRemedio(id),
+          onPress: async () => {
+            try {
+              await excluirRemedio(id);
+              Alert.alert('Sucesso', 'Remédio excluído com sucesso!');
+            } catch (error) {
+              Alert.alert('Erro', 'Não foi possível excluir o remédio.');
+            }
+          },
         },
       ]
     );

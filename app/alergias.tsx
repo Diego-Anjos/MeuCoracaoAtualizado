@@ -25,7 +25,14 @@ export default function AlergiasScreen() {
         {
           text: 'Excluir',
           style: 'destructive',
-          onPress: () => excluirAlergia(id),
+          onPress: async () => {
+            try {
+              await excluirAlergia(id);
+              Alert.alert('Sucesso', 'Alergia excluída com sucesso!');
+            } catch (error) {
+              Alert.alert('Erro', 'Não foi possível excluir a alergia.');
+            }
+          },
         },
       ]
     );

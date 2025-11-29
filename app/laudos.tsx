@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
 import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 import { useLaudos } from '@/contexts/LaudoContext';
@@ -26,8 +26,13 @@ export default function LaudosScreen() {
         {
           text: 'Excluir',
           style: 'destructive',
-          onPress: () => {
-            deleteLaudo(id);
+          onPress: async () => {
+            try {
+              await deleteLaudo(id);
+              Alert.alert('Sucesso', 'Laudo excluído com sucesso!');
+            } catch (error) {
+              Alert.alert('Erro', 'Não foi possível excluir o laudo.');
+            }
           },
         },
       ],

@@ -80,10 +80,12 @@ export function AlergiaProvider({ children }: { children: ReactNode }) {
   const excluirAlergia = async (id: string) => {
     try {
       setError(null);
+      console.log('🗑️ AlergiaContext - Excluindo alergia:', id);
       await alergiaAPI.delete(id);
       setAlergias(alergias.filter((alergia) => alergia.id !== id));
+      console.log('✅ AlergiaContext - Alergia excluída com sucesso');
     } catch (err: any) {
-      console.error('Erro ao excluir alergia:', err);
+      console.error('❌ AlergiaContext - Erro ao excluir alergia:', err);
       setError(err.message || 'Erro ao excluir alergia');
       throw err;
     }

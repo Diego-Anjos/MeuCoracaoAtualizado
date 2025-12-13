@@ -41,6 +41,22 @@ lerna-debug.log*
 .env.test.local
 .env.production.local
 .env.local
+.env.development
+.env.production
+.env.test
+
+# Sensitive data
+.env.*.key
+jwt_secret
+*.key
+*.pem
+private_key
+public_key
+
+# API keys and credentials
+google-credentials.json
+credentials.json
+service-account.json
 
 # temp directory
 .temp
@@ -54,3 +70,45 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Environment-specific secrets
+secrets/
+.secrets/
+
+# Database backups
+*.dump
+*.sql
+mongo-dump/
+db-backup/
+
+# Session files
+sessions/
+*.session
+
+# Lock files (if shared across environments)
+# package-lock.json
+# yarn.lock
+
+# VS Code workspace settings (user-specific)
+.vscode/settings.json
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Cache files
+.eslintcache
+.cache/
+*.cache
+

@@ -31,13 +31,56 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
 
 # typescript
 *.tsbuildinfo
 
+# app example
 app-example
 
 # generated native folders
 /ios
 /android
+
+# Sensitive data
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API keys and tokens
+jwt_secret
+*.key
+*.pem
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build outputs
+build/
+dist/
+out/
+
+# Dependencies lock files (optional - uncomment if needed)
+# package-lock.json
+# yarn.lock
+
+# Cache
+.cache/
+.eslintcache
+
